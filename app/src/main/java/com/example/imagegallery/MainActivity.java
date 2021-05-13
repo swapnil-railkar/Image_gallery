@@ -20,18 +20,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Initializing RecyclerView
         recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData();
     }
 
+    //Calling AtgApi.class through MainActivity.class
     private void getData()
     {
         final Call<PostList> postlist=AtgApi.getService().getPostList();
         postlist.enqueue(new Callback<PostList>() {
             @Override
             public void onResponse(Call<PostList> call, Response<PostList> response) {
-                PostList list= response.body();
+                PostList list= response.body(); //get contents of Api
                 recyclerView.setAdapter(new ImageAdapter(MainActivity.this,  list.getPhotos()));
             }
 
