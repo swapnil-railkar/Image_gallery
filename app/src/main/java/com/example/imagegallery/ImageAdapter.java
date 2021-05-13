@@ -12,15 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
@@ -33,6 +26,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         this.photos=photos;
         items=photos.getPhoto();
     }
+
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,16 +37,22 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
+        /*path to get URL of image is :
+        Photos->getPhoto()->List<Photo>->get(position)->Photo->getUrls()*/
        Photo image=items.get(position);
        String url=image.getUrlS();
+
+       //Updating Imageview with contents of the URL
        Glide.with(context).load(url).into(holder.image);
     }
 
+    //method to get item count
     @Override
     public int getItemCount() {
         return items.size();
     }
 
+    //View holder class
     public class ImageViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         public ImageViewHolder(@NonNull View itemView) {
