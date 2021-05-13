@@ -2,6 +2,7 @@ package com.example.imagegallery;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,18 +11,27 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
-    public int[] images;
+
     private Context context;
-    private List<ClipData.Item> items;
-    public ImageAdapter(Context context, List<ClipData.Item> items)
+    private Photos photos;
+    private List<Photo> items;
+    public ImageAdapter(Context context, Photos photos)
     {
         this.context=context;
-        this.items=items;
+        this.photos=photos;
+        items=photos.getPhoto();
     }
     @NonNull
     @Override
@@ -33,10 +43,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        ClipData.Item item=items.get(position);
-        Pattern p = Pattern.compile("<img[^>]+src\\s*=\\s*['\"]([^'\"]+)['\"][^>]*>");
-     
-
+       Photo image=items.get(position);
+       String url=image.getUrlS();
+       Glide.with(context).load(url).into(holder.image);
     }
 
     @Override

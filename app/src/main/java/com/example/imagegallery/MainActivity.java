@@ -16,14 +16,11 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    public int[] images={R.drawable.add,R.drawable.b723bc52a4d351c90e7c7629dadd51c7,
-            R.drawable.b723bc52a4d351c90e7c7629dadd51c7,R.drawable.clock,R.drawable.gundam,
-            R.drawable.locked,R.drawable.message,R.drawable.share,R.drawable.nature};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        RecyclerView recyclerView=findViewById(R.id.recyclerView);
+        recyclerView=findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData();
     }
@@ -35,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PostList> call, Response<PostList> response) {
                 PostList list= response.body();
-                recyclerView.setAdapter(new ImageAdapter(MainActivity.this, (List<ClipData.Item>) list.getPhotos()));
-                Toast.makeText(MainActivity.this,"Success",Toast.LENGTH_SHORT).show();
+                recyclerView.setAdapter(new ImageAdapter(MainActivity.this,  list.getPhotos()));
             }
 
             @Override
