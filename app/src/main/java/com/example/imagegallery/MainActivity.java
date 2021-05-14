@@ -1,14 +1,11 @@
 package com.example.imagegallery;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.ClipData;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,30 +13,30 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Initializing RecyclerView
-        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getData();
     }
 
     //Calling AtgApi.class through MainActivity.class
-    private void getData()
-    {
-        final Call<PostList> postlist=AtgApi.getService().getPostList();
-        postlist.enqueue(new Callback<PostList>() {
+    private void getData() {
+        final Call<PostList> postList = AtgApi.getService().getPostList();
+        postList.enqueue(new Callback<PostList>() {
             @Override
             public void onResponse(Call<PostList> call, Response<PostList> response) {
-                PostList list= response.body(); //get contents of Api
-                recyclerView.setAdapter(new ImageAdapter(MainActivity.this,  list.getPhotos()));
+                PostList list = response.body(); //get contents of Api
+                recyclerView.setAdapter(new ImageAdapter(MainActivity.this, list.getPhotos()));
             }
 
             @Override
             public void onFailure(Call<PostList> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"Error Occured",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
             }
         });
     }
